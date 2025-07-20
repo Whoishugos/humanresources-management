@@ -152,20 +152,20 @@ class HumanResourcesSeeder extends Seeder
 
             DB::table('presences')->insert([
             [
-                'employees_id' => 1, // HR Manager
-                'check_in_time' => Carbon::now()->format('Y-m-d H:i:s'),
-                'check_out_time' => Carbon::now()->addHours(8)->format('Y-m-d H:i:s'),
-                'attendance_date' => Carbon::now()->format('Y-m-d'),
+                'employee_id' => 1, // HR Manager
+                'check_in' => Carbon::now()->format('Y-m-d H:i:s'),
+                'check_out' => Carbon::now()->addHours(8)->format('Y-m-d H:i:s'),
+                'date' => Carbon::now()->format('Y-m-d'),
                 'status' => 'present',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'deleted_at' => null,
             ],
             [
-                'employees_id' => 2, // IT Support
-                'check_in_time' => Carbon::now()->format('Y-m-d H:i:s'),
-                'check_out_time' => Carbon::now()->addHours(8)->format('Y-m-d H:i:s'),
-                'attendance_date' => Carbon::now()->format('Y-m-d'),
+                'employee_id' => 2, // IT Support
+                'check_in' => Carbon::now()->format('Y-m-d H:i:s'),
+                'check_out' => Carbon::now()->addHours(8)->format('Y-m-d H:i:s'),
+                'date' => Carbon::now()->format('Y-m-d'),
                 'status' => 'present',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

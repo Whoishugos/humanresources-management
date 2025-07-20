@@ -68,10 +68,10 @@ return new class extends Migration
         });
          Schema::create('presences', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('employees_id')->constrained('employees');
-            $table->date('attendance_date');
-            $table->time('check_in_time')->nullable();
-            $table->time('check_out_time')->nullable();
+            $table->foreignId('employee_id')->constrained('employees');
+            $table->date('date');
+            $table->time('check_in')->nullable();
+            $table->time('check_out')->nullable();
             $table->string('status'); // present, absent, late,
             $table->timestamps();
             $table->softDeletes();
