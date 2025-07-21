@@ -64,9 +64,9 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('presences.edit', $presence->id)}}" class="btn btn-warning btn-sm">Edit</a>
 
-                                <form action="" method="POST" style="display:inline">
+                                <form action="{{ route('presences.destroy', $presence->id) }}" method="POST" style="display:inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -83,7 +83,8 @@
 </div>
 @endsection
 
-{{-- {{ route('presences.destroy', $presences->id) }} --}}
 
-{{-- {{ route('presences.edit', $presences->id)}} --}}
+
+
+
 
