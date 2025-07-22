@@ -98,7 +98,7 @@
             </li>
             <li
                 class="sidebar-item  ">
-                <a href="https://github.com/zuramai/mazer#donation" class='sidebar-link'>
+                <a href="{{ route('presences.index') }}" class='sidebar-link'>
                     <i class="bi bi-table"></i>
                     <span>Precenses</span>
                 </a>
