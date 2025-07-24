@@ -9,6 +9,8 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\PayrollController;
+use App\Http\Controllers\LeaveController;
+
 
 
 Route::get('/', function () {
@@ -28,6 +30,11 @@ Route::resource('/presences', PresenceController::class);
 // handle Presences routes
 Route::resource('/payrolls', PayrollController::class);
 Route::get('/payrolls/{id}/edit', [PayrollController::class, 'edit'])->name('payrolls.edit');
+// handle Presences routes
+Route::resource('/leaves', LeaveController::class);
+Route::get('/leaves/approved/{id}', [LeaveController::class, 'approved'])->name('leaves.approved');
+Route::get('/leaves/reject/{id}', [LeaveController::class, 'reject'])->name('leaves.reject');
+
 
 // handle task routes
 Route::resource('/tasks', TaskController::class);
