@@ -61,6 +61,7 @@
     <div class="sidebar-menu">
         <ul class="menu">
             <li class="sidebar-title">Menu</li>
+            @if (Auth::check() && Auth::user()->role === 'HR')
             <li
                 class="sidebar-item">
                 <a href="index.html" class='sidebar-link'>
@@ -105,21 +106,61 @@
             </li>
             <li
                 class="sidebar-item  ">
-                <a href="https://github.com/zuramai/mazer#donation" class='sidebar-link'>
+                <a href="{{ route('payrolls.index') }}" class='sidebar-link'>
                     <i class="bi bi-currency-dollar"></i>
                     <span>Payrolls</span>
                 </a>
             </li>
             <li
                 class="sidebar-item  ">
-                <a href="https://github.com/zuramai/mazer#donation" class='sidebar-link'>
+                <a href="{{ route('leaves.index') }}" class='sidebar-link'>
                     <i class="bi bi-shift-fill"></i>
                     <span>Leave Requests</span>
                 </a>
             </li>
+            @endif
+
+            @if (Auth::check() && in_array(Auth::user()->role, ['Developer', 'Finance']))
+            <li
+                class="sidebar-item">
+                <a href="index.html" class='sidebar-link'>
+                    <i class="bi bi-grid-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li
+                class="sidebar-item ">
+                <a href="{{ route('tasks.index') }}" class='sidebar-link'>
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span>Tasks</span>
+                </a>
+            </li>
+
             <li
                 class="sidebar-item  ">
-                <a href="https://github.com/zuramai/mazer#donation" class='sidebar-link'>
+                <a href="{{ route('presences.index') }}" class='sidebar-link'>
+                    <i class="bi bi-table"></i>
+                    <span>Precenses</span>
+                </a>
+            </li>
+            <li
+                class="sidebar-item  ">
+                <a href="{{ route('payrolls.index') }}" class='sidebar-link'>
+                    <i class="bi bi-currency-dollar"></i>
+                    <span>Payrolls</span>
+                </a>
+            </li>
+            <li
+                class="sidebar-item  ">
+                <a href="{{ route('leaves.index') }}" class='sidebar-link'>
+                    <i class="bi bi-shift-fill"></i>
+                    <span>Leave Requests</span>
+                </a>
+            </li>
+            @endif
+            <li
+                class="sidebar-item  ">
+                <a href="{{ url('/logout') }}" class='sidebar-link'>
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Logout</span>
                 </a>

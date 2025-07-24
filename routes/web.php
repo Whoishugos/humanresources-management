@@ -19,28 +19,27 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-// handle employee routes
-Route::resource('/employees', EmployeeController::class);
-// handle departments routes
-Route::resource('/departments', DepartmentController::class);
-// handle Roles routes
-Route::resource('/roles', RoleController::class);
-// handle Presences routes
-Route::resource('/presences', PresenceController::class);
-// handle Presences routes
-Route::resource('/payrolls', PayrollController::class);
-Route::get('/payrolls/{id}/edit', [PayrollController::class, 'edit'])->name('payrolls.edit');
-// handle Presences routes
-Route::resource('/leaves', LeaveController::class);
-Route::get('/leaves/approved/{id}', [LeaveController::class, 'approved'])->name('leaves.approved');
-Route::get('/leaves/reject/{id}', [LeaveController::class, 'reject'])->name('leaves.reject');
-
-
-// handle task routes
-Route::resource('/tasks', TaskController::class);
-Route::get('tasks/done/{id}', [TaskController::class,'done'])->name('task.done');
-Route::get('tasks/pending/{id}', [TaskController::class,'pending'])->name('task.pending');
-
+Route::middleware('auth')->group(function () {
+    // handle employee routes
+    Route::resource('/employees', EmployeeController::class)->middleware(['CheckRole:HR']);
+    // handle departments routes
+    Route::resource('/departments', DepartmentController::class)->middleware(['CheckRole:HR']);
+    // handle Roles routes
+    Route::resource('/roles', RoleController::class)->middleware(['CheckRole:HR']);
+    // handle Presences routes
+    Route::resource('/presences', PresenceController::class)->middleware(['CheckRole:HR,Developer,Finance']);
+    // handle Presences routes
+    Route::resource('/payrolls', PayrollController::class)->middleware(['CheckRole:HR,Developer,Finance']);
+    Route::get('/payrolls/{id}/edit', [PayrollController::class, 'edit'])->name('payrolls.edit')->middleware(['CheckRole:HR']);
+    // handle Presences routes
+    Route::resource('/leaves', LeaveController::class)->middleware('CheckRole:HR,Developer,Finance');
+    Route::get('/leaves/approved/{id}', [LeaveController::class, 'approved'])->name('leaves.approved')->middleware(['CheckRole:HR']);
+    Route::get('/leaves/reject/{id}', [LeaveController::class, 'reject'])->name('leaves.reject')->middleware(['CheckRole:HR']);
+    // handle task routes
+    Route::resource('/tasks', TaskController::class)->middleware(['CheckRole:HR,Developer,Finance']);
+    Route::get('tasks/done/{id}', [TaskController::class,'done'])->name('task.done')->middleware(['CheckRole:HR,Developer,Finance']);
+    Route::get('tasks/pending/{id}', [TaskController::class,'pending'])->name('task.pending')->middleware(['CheckRole:HR,Developer,Finance']);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
