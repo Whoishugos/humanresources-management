@@ -12,20 +12,23 @@ class TaskController extends Controller
     public function index()
 
     {
-        $tasks = Task::all();
+        if (sesssion('role') == 'HR') {
+            $tasks = Task::all();
+        } else {
+            $tasks = Task::where('assigned_to', session('employee_id'))->get();
+        }
 
-        // Logic to retrieve and display tasks
         return view('tasks.index', compact('tasks'));
     }
     public function create()
     {
-        // Logic to show the form for creating a new task
+
         $employees = Employee::all();
         return view('tasks.create', compact('employees'));
     }
     public function store(Request $request)
     {
-        // Validate and store the new task
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -35,7 +38,7 @@ class TaskController extends Controller
         ]);
 
         Task::create($validated);
-        // Task::create($request->all());
+
 
         return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
     }

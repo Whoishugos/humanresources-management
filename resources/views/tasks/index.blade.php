@@ -28,7 +28,9 @@
             </div>
             <div class="card-body">
                 <div class="d-flex">
+                    @if(session('role') == 'HR')
                     <a href="{{ route ('tasks.create')}}" class="btn btn-primary mb-3 ms-auto">New Tasks</a>
+                    @endif
                 </div>
 
                 @if(session('success'))
@@ -65,7 +67,7 @@
                             </td>
                             <td>
                                 <a href="{{route('tasks.show', $task->id )}}" class="btn btn-info btn-sm">View</a>
-
+                                @if(session('role') == 'HR')
                                 @if($task->status == 'pending')
                                 <a href="{{route('task.done', $task->id)}}" class="btn btn-success btn-sm">Mask As Done</a>
                                 @else
@@ -78,6 +80,7 @@
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                 </form>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

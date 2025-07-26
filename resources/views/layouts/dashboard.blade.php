@@ -64,56 +64,56 @@
             @if (Auth::check() && Auth::user()->role === 'HR')
             <li
                 class="sidebar-item">
-                <a href="index.html" class='sidebar-link'>
+                <a href="{{ url('/dashboard') }}" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li
                 class="sidebar-item ">
-                <a href="{{ route('tasks.index') }}" class='sidebar-link'>
+                <a href="{{ url('/tasks') }}" class='sidebar-link'>
                     <i class="bi bi-check-circle-fill"></i>
                     <span>Tasks</span>
                 </a>
             </li>
             <li
                 class="sidebar-item  ">
-                <a href="{{ route('employees.index') }}" class='sidebar-link'>
+                <a href="{{ url('/employees') }}" class='sidebar-link'>
                     <i class="bi bi-person"></i>
                     <span>Employees</span>
                 </a>
             </li>
             <li
                 class="sidebar-item  ">
-                <a href="{{ route('departments.index') }}" class='sidebar-link'>
+                <a href="{{ url('/departments') }}" class='sidebar-link'>
                     <i class="bi bi-briefcase"></i>
                     <span>Departments</span>
                 </a>
             </li>
             <li
                 class="sidebar-item  ">
-                <a href="{{ route('roles.index') }}" class='sidebar-link'>
+                <a href="{{ url('/roles') }}" class='sidebar-link'>
                     <i class="bi bi-tags"></i>
                     <span>Roles</span>
                 </a>
             </li>
             <li
                 class="sidebar-item  ">
-                <a href="{{ route('presences.index') }}" class='sidebar-link'>
+                <a href="{{ url('/presences') }}" class='sidebar-link'>
                     <i class="bi bi-table"></i>
                     <span>Precenses</span>
                 </a>
             </li>
             <li
                 class="sidebar-item  ">
-                <a href="{{ route('payrolls.index') }}" class='sidebar-link'>
+                <a href="{{ url('/payrolls') }}" class='sidebar-link'>
                     <i class="bi bi-currency-dollar"></i>
                     <span>Payrolls</span>
                 </a>
             </li>
             <li
                 class="sidebar-item  ">
-                <a href="{{ route('leaves.index') }}" class='sidebar-link'>
+                <a href="{{ url('/leaves') }}" class='sidebar-link'>
                     <i class="bi bi-shift-fill"></i>
                     <span>Leave Requests</span>
                 </a>
@@ -123,14 +123,14 @@
             @if (Auth::check() && in_array(Auth::user()->role, ['Developer', 'Finance']))
             <li
                 class="sidebar-item">
-                <a href="index.html" class='sidebar-link'>
+                <a href="{{ url('/dashboard') }}" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li
                 class="sidebar-item ">
-                <a href="{{ route('tasks.index') }}" class='sidebar-link'>
+                <a href="{{ url('tasks') }}" class='sidebar-link'>
                     <i class="bi bi-check-circle-fill"></i>
                     <span>Tasks</span>
                 </a>
@@ -138,21 +138,21 @@
 
             <li
                 class="sidebar-item  ">
-                <a href="{{ route('presences.index') }}" class='sidebar-link'>
+                <a href="{{ url('presences') }}" class='sidebar-link'>
                     <i class="bi bi-table"></i>
                     <span>Precenses</span>
                 </a>
             </li>
             <li
                 class="sidebar-item  ">
-                <a href="{{ route('payrolls.index') }}" class='sidebar-link'>
+                <a href="{{ url('payrolls') }}" class='sidebar-link'>
                     <i class="bi bi-currency-dollar"></i>
                     <span>Payrolls</span>
                 </a>
             </li>
             <li
                 class="sidebar-item  ">
-                <a href="{{ route('leaves.index') }}" class='sidebar-link'>
+                <a href="{{ url('leaves') }}" class='sidebar-link'>
                     <i class="bi bi-shift-fill"></i>
                     <span>Leave Requests</span>
                 </a>

@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['CheckRole:HR,Developer,Finance']);
 
 Route::middleware('auth')->group(function () {
     // handle employee routes
