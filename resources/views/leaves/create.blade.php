@@ -34,6 +34,7 @@
                  <div class="card-body">
                 <form action="{{ route('leaves.store') }}" method="POST">
                     @csrf
+                    @if (Auth::check() && Auth::user()->role === 'HR')
                    <div class="mb-2">
                         <label for="" class="form-label">Employees</label>
                         <select name="employee_id" class="form-control @error('employee_id') is-invalid @enderror" required>
@@ -45,6 +46,7 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    @endif
                     <div class="mb-2">
                         <label for="" class="form-label">Leave Type</label>
                         <select class="form-control @error('leave_type') is-invalid @enderror" id="leave_type" name="leave_type" required>

@@ -36,7 +36,7 @@ class HumanResourcesSeeder extends Seeder
             'deleted_at' => null,
         ],
         [
-            'name' => 'Sales',
+            'name' => 'Employees',
             'description' => 'Information Technology',
             'status' => 'active',
             'created_at' => Carbon::now(),
@@ -47,14 +47,8 @@ class HumanResourcesSeeder extends Seeder
 
         DB::table('roles')->insert([
             [
-                'title' => 'HR Manager',
+                'title' => 'HR',
                 'description' => 'Marketing Department',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
-            [
-                'title' => 'IT Support',
-                'description' => 'IT Support Department',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -65,7 +59,7 @@ class HumanResourcesSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
             [
-                'title' => 'Finance',
+                'title' => 'Employees',
                 'description' => 'Finance Department',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -178,7 +172,6 @@ class HumanResourcesSeeder extends Seeder
                 'leave_type' => 'Sick',
                 'start_date' => Carbon::now()->addDays(1)->format('Y-m-d'),
                 'end_date' => Carbon::now()->addDays(3)->format('Y-m-d'),
-                'reason' => $faker->sentence(),
                 'status' => 'review',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -189,7 +182,6 @@ class HumanResourcesSeeder extends Seeder
                 'leave_type' => 'Vacation',
                 'start_date' => Carbon::now()->addDays(1)->format('Y-m-d'),
                 'end_date' => Carbon::now()->addDays(3)->format('Y-m-d'),
-                'reason' => $faker->sentence(),
                 'status' => 'review',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

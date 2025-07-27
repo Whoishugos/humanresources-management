@@ -12,8 +12,7 @@
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                        <li class="breadcrumb-item" aria-current="page">Task</li>
-                        <li class="breadcrumb-item active" aria-current="page">Show</li>
+                        <li class="breadcrumb-item active" aria-current="page">Task</li>
                     </ol>
                 </nav>
             </div>
@@ -22,17 +21,17 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
+
                 <h5 class="card-title">
                     Task Detail Employee
                 </h5>
             </div>
             <div class="card-body">
                 <div class="d-flex">
-                    @if(session('role') == 'HR')
+                    @if (Auth::check() && Auth::user()->role === 'HR')
                     <a href="{{ route ('tasks.create')}}" class="btn btn-primary mb-3 ms-auto">New Tasks</a>
                     @endif
                 </div>
-
                 @if(session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -52,7 +51,7 @@
                     <tbody>
                         @foreach ($tasks as $task)
                         <tr>
-                            <td>{{ $task->employee->fullname }}</td>
+                            <td>{{ optional($task->employee)->fullname }}</td>
                             <td>{{ $task->title }}</td>
                             <td>{{ $task->due_date }}</td>
 
@@ -67,7 +66,7 @@
                             </td>
                             <td>
                                 <a href="{{route('tasks.show', $task->id )}}" class="btn btn-info btn-sm">View</a>
-                                @if(session('role') == 'HR')
+                                @if (Auth::check() && Auth::user()->role === 'HR')
                                 @if($task->status == 'pending')
                                 <a href="{{route('task.done', $task->id)}}" class="btn btn-success btn-sm">Mask As Done</a>
                                 @else

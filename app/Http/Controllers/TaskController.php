@@ -5,21 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Auth;
 
 
 class TaskController extends Controller
 {
-    public function index()
+public function index()
+{
 
-    {
-        if (sesssion('role') == 'HR') {
-            $tasks = Task::all();
-        } else {
-            $tasks = Task::where('assigned_to', session('employee_id'))->get();
-        }
+    if (Auth::check() && Auth::user()->role === 'HR') {
 
-        return view('tasks.index', compact('tasks'));
+        $tasks = Task::all();
+    } else {
+
+        $user = Auth::user();
+        $tasks = Task::where('assigned_to', $user->id)->get();
     }
+    return view('tasks.index', compact('tasks'));
+}
     public function create()
     {
 
@@ -27,21 +30,20 @@ class TaskController extends Controller
         return view('tasks.create', compact('employees'));
     }
     public function store(Request $request)
-    {
+{
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'assigned_to' => 'required|exists:employees,id',
+        'due_date' => 'nullable|date',
+        'status' => 'required|string',
+    ]);
 
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'assigned_to' => 'required|exists:employees,id',
-            'due_date' => 'nullable|date',
-            'status' => 'required|string',
-        ]);
-
-        Task::create($validated);
+    $task = Task::create($validated);
 
 
-        return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
-    }
+    return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
+}
     public function edit(Task $task)
     {
         $employees = Employee::all();

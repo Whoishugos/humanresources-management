@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Leave;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Auth;
 
 class LeaveController extends Controller
 {
     public function index() {
-
-        $leaves = Leave::all();
-        return view ('leaves.index', compact('leaves'));
+        if (Auth::check() && Auth::user()->role === 'HR') {
+            $leaves = Leave::all();
+        } else {
+            $user = Auth::user();
+            $leaves = Leave::where('employee_id', $user->id)->get();
+        }
+        return view('leaves.index', compact('leaves'));
     }
     public function create() {
 
@@ -20,25 +25,25 @@ class LeaveController extends Controller
 
         return view('leaves.create', compact('employees'));
     }
-    public function store(Request $request) {
-
+   public function store(Request $request) {
+    if (Auth::check() && Auth::user()->role === 'HR') {
         $request->validate([
             'employee_id' => 'required|exists:employees,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
-            // 'reason' => 'required|string|max:255',
-            // 'status' => 'required|string',
             'leave_type' => 'required|string',
+            // Tambahkan status ke dalam validasi jika diperlukan
+            // 'status' => 'required|string',
         ]);
-
-        $request->merge([
-            'status' => 'Review', // Set default status to pending
-        ]);
-
-        Leave::create($request->all());
-
-        return redirect()->route('leaves.index')->with('success', 'Leave request created successfully.');
+    } else {
+        $user = Auth::user();
+        $request->merge(['employee_id' => $user->id]);
     }
+    // Menambahkan status default
+    $request->merge(['status' => 'pending']); // Atur status default
+    Leave::create($request->all());
+    return redirect()->route('leaves.index')->with('success', 'Leave request created successfully.');
+}
 
     public function destroy($id) {
         $leave = Leave::findOrFail($id);

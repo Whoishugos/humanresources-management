@@ -82,7 +82,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('reason')->nullable();
-            $table->string('status'); // pending, approved, rejected
+            $table->string('status')->default('pending');
             $table->string('leave_type'); // annual, sick, personal, etc.
             $table->timestamps();
             $table->softDeletes();

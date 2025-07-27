@@ -28,7 +28,9 @@
             </div>
             <div class="card-body">
                 <div class="d-flex">
+                    @if (Auth::check() && Auth::user()->role === 'HR')
                     <a href="{{ route ('payrolls.create')}}" class="btn btn-primary mb-3 ms-auto">New Payrolls</a>
+                    @endif
                 </div>
 
                 @if(session('success'))
@@ -69,6 +71,7 @@
                             </td>
                             <td>
                                 <a href="{{ route('payrolls.show', $payroll->id)}}" class="btn btn-info btn-sm">Salary Slip</a>
+                                @if (Auth::check() && Auth::user()->role === 'HR')
                                 <a href="{{ route('payrolls.edit', $payroll->id)}}" class="btn btn-warning btn-sm">Edit</a>
 
                                 <form action="{{ route('payrolls.destroy', $payroll->id) }}" method="POST" style="display:inline">
@@ -76,6 +79,7 @@
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                 </form>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

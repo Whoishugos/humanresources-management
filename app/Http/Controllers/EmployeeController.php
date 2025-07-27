@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Department;
 use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {

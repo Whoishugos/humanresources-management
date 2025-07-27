@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['CheckRole:HR,Developer,Finance']);
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['CheckRole:HR,Developer,Finance,Employees']);
 
 Route::middleware('auth')->group(function () {
     // handle employee routes
@@ -27,18 +27,18 @@ Route::middleware('auth')->group(function () {
     // handle Roles routes
     Route::resource('/roles', RoleController::class)->middleware(['CheckRole:HR']);
     // handle Presences routes
-    Route::resource('/presences', PresenceController::class)->middleware(['CheckRole:HR,Developer,Finance']);
+    Route::resource('/presences', PresenceController::class)->middleware(['CheckRole:HR,Developer,Finance,Employees']);
     // handle Presences routes
-    Route::resource('/payrolls', PayrollController::class)->middleware(['CheckRole:HR,Developer,Finance']);
+    Route::resource('/payrolls', PayrollController::class)->middleware(['CheckRole:HR,Developer,Finance,Employees']);
     Route::get('/payrolls/{id}/edit', [PayrollController::class, 'edit'])->name('payrolls.edit')->middleware(['CheckRole:HR']);
     // handle Presences routes
-    Route::resource('/leaves', LeaveController::class)->middleware('CheckRole:HR,Developer,Finance');
+    Route::resource('/leaves', LeaveController::class)->middleware(['CheckRole:HR,Developer,Finance,Employees']);
     Route::get('/leaves/approved/{id}', [LeaveController::class, 'approved'])->name('leaves.approved')->middleware(['CheckRole:HR']);
     Route::get('/leaves/reject/{id}', [LeaveController::class, 'reject'])->name('leaves.reject')->middleware(['CheckRole:HR']);
     // handle task routes
-    Route::resource('/tasks', TaskController::class)->middleware(['CheckRole:HR,Developer,Finance']);
-    Route::get('tasks/done/{id}', [TaskController::class,'done'])->name('task.done')->middleware(['CheckRole:HR,Developer,Finance']);
-    Route::get('tasks/pending/{id}', [TaskController::class,'pending'])->name('task.pending')->middleware(['CheckRole:HR,Developer,Finance']);
+    Route::resource('/tasks', TaskController::class);
+    Route::get('tasks/done/{id}', [TaskController::class,'done'])->name('task.done');
+    Route::get('tasks/pending/{id}', [TaskController::class,'pending'])->name('task.pending');
 });
 
 Route::middleware('auth')->group(function () {

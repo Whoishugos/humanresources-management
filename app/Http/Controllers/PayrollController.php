@@ -6,14 +6,22 @@ use Illuminate\Http\Request;
 
 use App\Models\Payroll;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Auth;
 
 class PayrollController extends Controller
 {
     public function index() {
-
+    $user = Auth::user(); // Mendapatkan pengguna yang sedang login
+    if ($user && $user->role === 'HR') {
+        // Jika pengguna adalah HR, ambil semua payrolls
         $payrolls = Payroll::all();
-        return view('payrolls.index', compact('payrolls'));
+    } else {
+        // Jika bukan HR, ambil payroll yang ditugaskan kepada pengguna yang sedang login
+        $payrolls = Payroll::where('employee_id', $user->id)->get();
     }
+    return view('payrolls.index', compact('payrolls'));
+}
+
 
     public function create(){
         $employees = Employee::all();

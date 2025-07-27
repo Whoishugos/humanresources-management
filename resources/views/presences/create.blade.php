@@ -32,6 +32,7 @@
 
                 <form action="{{ route('presences.store') }}" method="POST">
                     @csrf
+                    @if (Auth::check() && Auth::user()->role === 'HR')
                     <div class="mb-2">
                         <label for="" class="form-label">Employees</label>
                         <select name="employee_id" class="form-control @error('employee_id') is-invalid @enderror" required>
@@ -43,6 +44,7 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    @endif
                     <div class="mb-3">
                         <label for="" class="form-label">Attendance Date</label>
                         <input type="date" class="form-control" name="date" required>

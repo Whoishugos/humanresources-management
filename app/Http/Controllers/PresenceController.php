@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Presence;
 use App\Models\Employee;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class PresenceController extends Controller
 {
     public function index() {
-    if (session('role') == 'HR') {
+    if (Auth::check() && Auth::user()->role === 'HR') {
         $presences = Presence::all();
     } else {
+        $user = Auth::user();
         $presences = Presence::where('employee_id', session('employee_id'))->get();
     }
         return view('presences.index', compact('presences'));
@@ -26,7 +28,7 @@ class PresenceController extends Controller
     }
     public function store (Request $request) {
 
-        if (session('role') != 'HR') {
+        if (Auth::check() && Auth::user()->role === 'HR') {
 
         $request->validate([
             'employee_id' => 'required',

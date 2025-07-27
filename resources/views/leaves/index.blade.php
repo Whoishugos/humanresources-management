@@ -28,7 +28,9 @@
             </div>
             <div class="card-body">
                 <div class="d-flex">
+
                     <a href="{{ route ('leaves.create')}}" class="btn btn-primary mb-3 ms-auto">New leaves</a>
+
                 </div>
 
                 @if(session('success'))
@@ -46,7 +48,9 @@
                             <th>Leave Type</th>
                             {{-- <th>Reason</th> --}}
                             <th>Status</th>
+                            @if (Auth::check() && Auth::user()->role === 'HR')
                             <th>Options</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -69,8 +73,8 @@
                                 @endif
                             </td>
                             <td>
-                               @if($leave->status == 'review')
-                                <span class="text-warning">Review</span>
+                               @if($leave->status == 'pending')
+                                <span class="text-warning">Pending</span>
                                 @elseif($leave->status == 'approved')
                                 <span class="text-success">Approved</span>
                                 @elseif($leave->status == 'rejected')
@@ -79,31 +83,31 @@
                                 <span class="textsecondary">{{ $leave->status }}</span>
                                 @endif
                             </td>
+                            @if (Auth::check() && Auth::user()->role === 'HR')
                             <td>
-    @if ($leave->status == 'review')
-        <a href="{{ route('leaves.approved', $leave->id)}}" class="btn btn-success btn-sm">Approved</a>
-        <a href="{{ route('leaves.reject', $leave->id)}}" class="btn btn-danger btn-sm">Reject</a>
-    @elseif ($leave->status == 'approved')
-        <a href="{{ route('leaves.reject', $leave->id)}}" class="btn btn-danger btn-sm">Reject</a>
-    @elseif ($leave->status == 'rejected')
-        <a href="{{ route('leaves.approved', $leave->id)}}" class="btn btn-success btn-sm">Approved</a>
-    @endif
+                            @if ($leave->status == 'review')
+                                <a href="{{ route('leaves.approved', $leave->id)}}" class="btn btn-success btn-sm">Approved</a>
+                                <a href="{{ route('leaves.reject', $leave->id)}}" class="btn btn-danger btn-sm">Reject</a>
+                            @elseif ($leave->status == 'approved')
+                                <a href="{{ route('leaves.reject', $leave->id)}}" class="btn btn-danger btn-sm">Reject</a>
+                            @elseif ($leave->status == 'rejected')
+                                <a href="{{ route('leaves.approved', $leave->id)}}" class="btn btn-success btn-sm">Approved</a>
+                            @endif
+                            <a href="{{ route('leaves.edit', $leave->id)}}" class="btn btn-warning btn-sm">Edit</a>
 
-    <a href="{{ route('leaves.edit', $leave->id)}}" class="btn btn-warning btn-sm">Edit</a>
-
-    <form action="{{ route('leaves.destroy', $leave->id) }}" method="POST" style="display:inline">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-    </form>
-</td>
+                            <form action="{{ route('leaves.destroy', $leave->id) }}" method="POST" style="display:inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                            @endif
+                    </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-
     </section>
 </div>
 @endsection

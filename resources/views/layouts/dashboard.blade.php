@@ -12,18 +12,26 @@
   <link rel="stylesheet" href="{{ asset('mazer/dist/assets/compiled/css/iconly.css') }}">
   <link rel="stylesheet" href="{{ asset('mazer/dist/assets/extensions/simple-datatables/style.css') }}">
   <link rel="stylesheet" href="{{ asset('mazer/dist/assets/extensions/table-datatables/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('mazer/dist/assets/compiled/css/ui-icons.css') }}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+
+{{-- Dripicons --}}
+<link rel="stylesheet" href="{{ asset('mazer/dist/assets/extensions/@icon/dripicons/dripicons.css') }}">
+<link rel="stylesheet" href="{{ asset('mazer/dist/assets/compiled/css/ui-icons-dripicons.css') }}">
+
+
 </head>
 
 <body>
-    <script src="assets/static/js/initTheme.js"></script>
+    <script src="{{ asset('mazer/dist/assets/static/js/initTheme.js') }}"></script>
     <div id="app">
         <div id="sidebar">
             <div class="sidebar-wrapper active">
     <div class="sidebar-header position-relative">
         <div class="d-flex justify-content-between align-items-center">
             <div class="logo">
-                <a href="index.html"><img src="{{ asset('mazer/dist/assets/compiled/svg/logo.svg') }}" alt="Logo" srcset=""></a>
+                <a href="{{ ('/') }}"><img src="{{ asset('mazer/dist/assets/compiled/svg/logo.svg') }}" alt="Logo" srcset=""></a>
             </div>
             <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
@@ -63,56 +71,56 @@
             <li class="sidebar-title">Menu</li>
             @if (Auth::check() && Auth::user()->role === 'HR')
             <li
-                class="sidebar-item">
+                class="sidebar-item {{ request()->is('dashboard') ? 'active' : '' }}">
                 <a href="{{ url('/dashboard') }}" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li
-                class="sidebar-item ">
+                class="sidebar-item {{ request()->is('tasks') ? 'active' : '' }}">
                 <a href="{{ url('/tasks') }}" class='sidebar-link'>
                     <i class="bi bi-check-circle-fill"></i>
                     <span>Tasks</span>
                 </a>
             </li>
             <li
-                class="sidebar-item  ">
+                class="sidebar-item  {{ request()->is('employees') ? 'active' : '' }}">
                 <a href="{{ url('/employees') }}" class='sidebar-link'>
                     <i class="bi bi-person"></i>
                     <span>Employees</span>
                 </a>
             </li>
             <li
-                class="sidebar-item  ">
+                class="sidebar-item  {{ request()->is('departments') ? 'active' : '' }}">
                 <a href="{{ url('/departments') }}" class='sidebar-link'>
                     <i class="bi bi-briefcase"></i>
                     <span>Departments</span>
                 </a>
             </li>
             <li
-                class="sidebar-item  ">
+                class="sidebar-item  {{ request()->is('roles') ? 'active' : '' }}">
                 <a href="{{ url('/roles') }}" class='sidebar-link'>
                     <i class="bi bi-tags"></i>
                     <span>Roles</span>
                 </a>
             </li>
             <li
-                class="sidebar-item  ">
+                class="sidebar-item  {{ request()->is('presences') ? 'active' : '' }}">
                 <a href="{{ url('/presences') }}" class='sidebar-link'>
                     <i class="bi bi-table"></i>
                     <span>Precenses</span>
                 </a>
             </li>
             <li
-                class="sidebar-item  ">
+                class="sidebar-item  {{ request()->is('payrolls') ? 'active' : '' }}">
                 <a href="{{ url('/payrolls') }}" class='sidebar-link'>
                     <i class="bi bi-currency-dollar"></i>
                     <span>Payrolls</span>
                 </a>
             </li>
             <li
-                class="sidebar-item  ">
+                class="sidebar-item  {{ request()->is('leaves') ? 'active' : '' }}">
                 <a href="{{ url('/leaves') }}" class='sidebar-link'>
                     <i class="bi bi-shift-fill"></i>
                     <span>Leave Requests</span>
@@ -120,39 +128,39 @@
             </li>
             @endif
 
-            @if (Auth::check() && in_array(Auth::user()->role, ['Developer', 'Finance']))
+            @if (Auth::check() && in_array(Auth::user()->role, ['Developer', 'Finance', 'Employees']))
             <li
-                class="sidebar-item">
+                class="sidebar-item {{ request()->is('dashboard') ? 'active' : '' }}">
                 <a href="{{ url('/dashboard') }}" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li
-                class="sidebar-item ">
-                <a href="{{ url('tasks') }}" class='sidebar-link'>
+                class="sidebar-item {{ request()->is('tasks') ? 'active' : '' }}">
+                <a href="{{ url('/tasks') }}" class='sidebar-link'>
                     <i class="bi bi-check-circle-fill"></i>
                     <span>Tasks</span>
                 </a>
             </li>
 
             <li
-                class="sidebar-item  ">
-                <a href="{{ url('presences') }}" class='sidebar-link'>
+                class="sidebar-item  {{ request()->is('employees') ? 'active' : '' }}">
+                <a href="{{ url('/presences') }}" class='sidebar-link'>
                     <i class="bi bi-table"></i>
                     <span>Precenses</span>
                 </a>
             </li>
             <li
-                class="sidebar-item  ">
-                <a href="{{ url('payrolls') }}" class='sidebar-link'>
+                class="sidebar-item {{ request()->is('payrolls') ? 'active' : '' }} ">
+                <a href="{{ url('/payrolls') }}" class='sidebar-link'>
                     <i class="bi bi-currency-dollar"></i>
                     <span>Payrolls</span>
                 </a>
             </li>
             <li
-                class="sidebar-item  ">
-                <a href="{{ url('leaves') }}" class='sidebar-link'>
+                class="sidebar-item  {{ request()->is('leaves') ? 'active' : '' }}">
+                <a href="{{ url('/leaves') }}" class='sidebar-link'>
                     <i class="bi bi-shift-fill"></i>
                     <span>Leave Requests</span>
                 </a>
@@ -173,6 +181,8 @@
 
     @yield('content')
 
+
+
             <footer>
     <div class="footer clearfix mb-0 text-muted">
         <div class="float-start">
@@ -180,7 +190,7 @@
         </div>
         <div class="float-end">
             <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                by <a href="https://saugi.me">Ramatommys</a></p>
+                by <a href="https://github.com/Whoishugos">Ramatommys</a></p>
         </div>
     </div>
 </footer>
@@ -189,12 +199,13 @@
     <script src="{{ asset('mazer/dist/assets/static/js/components/dark.js') }}"></script>
     <script src="{{ asset('mazer/dist/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('mazer/dist/assets/compiled/js/app.js') }}"></script>
-    <script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
-    <script src="assets/static/js/pages/dashboard.js"></script>
+    <script src="{{ asset('mazer/dist/assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('mazer/dist/assets/static/js/pages/dashboard.js"') }}></script>
 
     {{-- hanya dibutuhkan untuk data tables --}}
     <script src="{{ asset('mazer/dist/assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('mazer/dist/assets/static/js/pages/simple-datatables.js') }}"></script>
+
     // untuk date
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
